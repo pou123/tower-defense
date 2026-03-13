@@ -1,0 +1,9 @@
+{
+  "baseSpeed": 200,
+  "baseRadius": 18,
+  "dashDistanceMultiplier": 2,
+  "dashDuration": 0.2,
+  "dashCooldown": 1.5,
+  "xpPickupRadius": 22,
+  "dashDamage": 20
+}

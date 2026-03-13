@@ -1,0 +1,619 @@
+{
+  "arguments": [
+    {
+      "id": "fanatic",
+      "name": "Fanatic",
+      "description": "Enemies drop 50% more XP",
+      "icon": "★",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "collector",
+      "name": "Collector",
+      "description": "XP pickup radius tripled",
+      "icon": "◎",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "farsight",
+      "name": "Farsight",
+      "description": "Increases tower weapon range by 15%",
+      "icon": "◈",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": []
+    },
+    {
+      "id": "heavy_bullets",
+      "name": "Heavy Bullets",
+      "description": "Tower weapons deal 20% more damage",
+      "icon": "⬡",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": []
+    },
+    {
+      "id": "massive",
+      "name": "Massive",
+      "description": "Increase max HP by 25",
+      "icon": "♥",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": []
+    },
+    {
+      "id": "energized",
+      "name": "Energized",
+      "description": "Increases tower max energy by 20",
+      "icon": "⚡",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": []
+    },
+    {
+      "id": "solar_panels",
+      "name": "Solar Panels",
+      "description": "Tower passively recharges at 0.25/s even without the player",
+      "icon": "☀",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "swift",
+      "name": "Swift",
+      "description": "Player movement speed +15%",
+      "icon": "➤",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": []
+    },
+    {
+      "id": "scavenger",
+      "name": "Scavenger",
+      "description": "Enemies have a 20% chance to drop an HP orb on death",
+      "icon": "✦",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "iron_will",
+      "name": "Iron Will",
+      "description": "Once per run: survive a killing blow at 1 HP",
+      "icon": "⚔",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "anchor",
+      "name": "Anchor",
+      "description": "Tower takes 5% less damage from enemies (stacks)",
+      "icon": "⚓",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": []
+    },
+    {
+      "id": "slipstream",
+      "name": "Slipstream",
+      "description": "Dash leaves a trail that slows enemies for 2 seconds",
+      "icon": "〜",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "voltaic",
+      "name": "Voltaic",
+      "description": "Dashing through an enemy deals 20 damage to them",
+      "icon": "⚡",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "overclock",
+      "name": "Overclock",
+      "description": "Tower fires 25% faster but energy drains 50% faster",
+      "icon": "⏩",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "ghost_step",
+      "name": "Ghost Step",
+      "description": "Dash invulnerability extended and cooldown reduced to 1s",
+      "icon": "◉",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "emergency_protocol",
+      "name": "Emergency Protocol",
+      "description": "Below 25% HP: tower auto-fires for 5s ignoring energy",
+      "icon": "☢",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "overcharge",
+      "name": "Overcharge",
+      "description": "When tower energy is full, weapons deal 20% bonus damage",
+      "icon": "◆",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": []
+    },
+    {
+      "id": "bulwark",
+      "name": "Bulwark",
+      "description": "Tower emits a slow field: enemies within radius move 30% slower",
+      "icon": "⬟",
+      "category": "general",
+      "maxLevel": 3,
+      "prerequisites": []
+    },
+    {
+      "id": "weapon_gun",
+      "name": "Gun",
+      "description": "Add a Gun to the tower (3 shots/sec, reliable damage)",
+      "icon": "🔫",
+      "category": "weapon",
+      "weaponType": "gun",
+      "maxLevel": 4,
+      "prerequisites": []
+    },
+    {
+      "id": "weapon_shotgun",
+      "name": "Shotgun",
+      "description": "Add a Shotgun to the tower (burst of 5 pellets, short range)",
+      "icon": "⦿",
+      "category": "weapon",
+      "weaponType": "shotgun",
+      "maxLevel": 4,
+      "prerequisites": []
+    },
+    {
+      "id": "weapon_rifle",
+      "name": "Rifle",
+      "description": "Add a Rifle to the tower (slow fire, high damage, long range)",
+      "icon": "━",
+      "category": "weapon",
+      "weaponType": "rifle",
+      "maxLevel": 4,
+      "prerequisites": []
+    },
+    {
+      "id": "weapon_sniper",
+      "name": "Sniper",
+      "description": "Add a Sniper to the tower (extreme range, pierces all enemies)",
+      "icon": "✕",
+      "category": "weapon",
+      "weaponType": "sniper",
+      "maxLevel": 4,
+      "prerequisites": []
+    },
+    {
+      "id": "weapon_mortar",
+      "name": "Mortar",
+      "description": "Add a Mortar to the tower (AoE explosions targeting clusters)",
+      "icon": "◉",
+      "category": "weapon",
+      "weaponType": "mortar",
+      "maxLevel": 4,
+      "prerequisites": []
+    },
+    {
+      "id": "weapon_missile",
+      "name": "Missile Launcher",
+      "description": "Add a Missile Launcher (homing missiles, AoE on impact)",
+      "icon": "▲",
+      "category": "weapon",
+      "weaponType": "missile",
+      "maxLevel": 4,
+      "prerequisites": []
+    },
+    {
+      "id": "weapon_flamethrower",
+      "name": "Flamethrower",
+      "description": "Add a Flamethrower (short range cone, applies burn DoT)",
+      "icon": "🔥",
+      "category": "weapon",
+      "weaponType": "flamethrower",
+      "maxLevel": 4,
+      "prerequisites": []
+    },
+    {
+      "id": "weapon_tesla",
+      "name": "Tesla Coil",
+      "description": "Add a Tesla Coil (chains lightning between nearby enemies)",
+      "icon": "⚡",
+      "category": "weapon",
+      "weaponType": "tesla",
+      "maxLevel": 4,
+      "prerequisites": []
+    },
+    {
+      "id": "weapon_laser",
+      "name": "Laser",
+      "description": "Add a Laser (rotating beam dealing continuous damage)",
+      "icon": "◍",
+      "category": "weapon",
+      "weaponType": "laser",
+      "maxLevel": 4,
+      "prerequisites": []
+    },
+    {
+      "id": "point_of_impact",
+      "name": "Point of Impact",
+      "description": "A weapon upgrade: bullets deal 2x damage at max range, 1x at zero range",
+      "icon": "⊕",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": [],
+      "appliesToWeapons": ["gun", "rifle", "sniper", "shotgun"]
+    },
+    {
+      "id": "spread",
+      "name": "Spread",
+      "description": "Shotgun: +2 pellets and wider spread (+15% damage per level)",
+      "icon": "⊗",
+      "category": "weapon_upgrade",
+      "maxLevel": 3,
+      "prerequisites": ["weapon_shotgun"],
+      "appliesToWeapons": ["shotgun"]
+    },
+    {
+      "id": "afterburn",
+      "name": "Afterburn",
+      "description": "Bullets leave a fire trail dealing 3 damage/s for 2 seconds",
+      "icon": "🌡",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": [],
+      "appliesToWeapons": ["gun", "rifle", "sniper", "shotgun"]
+    },
+    {
+      "id": "incendiary_rounds",
+      "name": "Incendiary Rounds",
+      "description": "Bullets apply burn: 5 damage/s for 3 seconds",
+      "icon": "🔥",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": [],
+      "appliesToWeapons": ["gun", "rifle", "sniper", "shotgun"]
+    },
+    {
+      "id": "ricochet",
+      "name": "Ricochet",
+      "description": "Bullets bounce off arena walls once",
+      "icon": "↗",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": [],
+      "appliesToWeapons": ["gun", "rifle", "sniper", "shotgun"]
+    },
+    {
+      "id": "drum_magazine",
+      "name": "Drum Magazine",
+      "description": "Gun fires a 5-shot burst then pauses (same avg DPS, bursty feel)",
+      "icon": "⊙",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": ["weapon_gun"],
+      "appliesToWeapons": ["gun"]
+    },
+    {
+      "id": "explosive_tip",
+      "name": "Explosive Tip",
+      "description": "Rifle shots explode on impact dealing 40% damage in a small AoE",
+      "icon": "💥",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": ["weapon_rifle"],
+      "appliesToWeapons": ["rifle"]
+    },
+    {
+      "id": "cryo_rounds",
+      "name": "Cryo Rounds",
+      "description": "Shots apply a 40% slow for 1.5 seconds on hit",
+      "icon": "❄",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": [],
+      "appliesToWeapons": ["gun", "rifle", "sniper", "shotgun", "mortar", "missile"]
+    },
+    {
+      "id": "overpressure",
+      "name": "Overpressure",
+      "description": "Shotgun blasts knock enemies back significantly (+1 knockback/level)",
+      "icon": "⇒",
+      "category": "weapon_upgrade",
+      "maxLevel": 3,
+      "prerequisites": ["weapon_shotgun"],
+      "appliesToWeapons": ["shotgun"]
+    },
+    {
+      "id": "chain_reaction",
+      "name": "Chain Reaction",
+      "description": "Mortar explosions have a 30% chance to trigger a smaller secondary blast",
+      "icon": "💫",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": ["weapon_mortar"],
+      "appliesToWeapons": ["mortar"]
+    },
+    {
+      "id": "seeking",
+      "name": "Seeking",
+      "description": "Missiles have tighter homing tracking (+1 turn speed/level)",
+      "icon": "⟳",
+      "category": "weapon_upgrade",
+      "maxLevel": 3,
+      "prerequisites": ["weapon_missile"],
+      "appliesToWeapons": ["missile"]
+    },
+    {
+      "id": "wide_beam",
+      "name": "Wide Beam",
+      "description": "Laser beam width increases (+4px per level)",
+      "icon": "═",
+      "category": "weapon_upgrade",
+      "maxLevel": 3,
+      "prerequisites": ["weapon_laser"],
+      "appliesToWeapons": ["laser"]
+    },
+    {
+      "id": "fuel_pressure",
+      "name": "Fuel Pressure",
+      "description": "Flamethrower range and cone width increase (+20% per level)",
+      "icon": "⬆",
+      "category": "weapon_upgrade",
+      "maxLevel": 3,
+      "prerequisites": ["weapon_flamethrower"],
+      "appliesToWeapons": ["flamethrower"]
+    },
+    {
+      "id": "armor_piercing",
+      "name": "Armor Piercing",
+      "description": "This weapon ignores 25% of enemy current HP scaling",
+      "icon": "⬛",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": [],
+      "appliesToWeapons": ["gun", "rifle", "sniper", "shotgun", "mortar", "missile", "tesla"]
+    },
+    {
+      "id": "fracture_payload",
+      "name": "Fracture Payload",
+      "description": "Enemies killed by this weapon explode into shrapnel hitting nearby enemies",
+      "icon": "💢",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": [],
+      "appliesToWeapons": ["gun", "rifle", "sniper", "shotgun", "mortar", "missile", "flamethrower", "laser", "pulse"]
+    },
+    {
+      "id": "splinter_core",
+      "name": "Splinter Core",
+      "description": "Projectiles split into two on impact",
+      "icon": "✴",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": [],
+      "appliesToWeapons": ["gun", "rifle", "sniper", "shotgun", "mortar", "missile"]
+    },
+    {
+      "id": "delayed_charge",
+      "name": "Delayed Charge",
+      "description": "Projectiles attach to enemies and detonate after 1.5s for double damage",
+      "icon": "⏱",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": [],
+      "appliesToWeapons": ["gun", "rifle", "sniper", "mortar", "missile"]
+    },
+    {
+      "id": "echo_shot",
+      "name": "Echo Shot",
+      "description": "Each shot fires a weaker ghost copy 0.4s later dealing 50% damage",
+      "icon": "◌",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": [],
+      "appliesToWeapons": ["gun", "rifle", "sniper", "shotgun"]
+    },
+    {
+      "id": "storm_rounds",
+      "name": "Storm Rounds",
+      "description": "Every 5th hit from this weapon triggers a lightning burst hitting nearby enemies",
+      "icon": "⚡",
+      "category": "weapon_upgrade",
+      "maxLevel": 1,
+      "prerequisites": [],
+      "appliesToWeapons": ["gun", "rifle", "sniper", "shotgun", "mortar", "missile"]
+    },
+    {
+      "id": "emergency_dash",
+      "name": "Emergency Dash",
+      "description": "Taking damage resets your dash cooldown",
+      "icon": "⚠",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "kinetic_rebound",
+      "name": "Kinetic Rebound",
+      "description": "Dashing knocks nearby enemies away",
+      "icon": "↺",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "momentum_harvest",
+      "name": "Momentum Harvest",
+      "description": "Collecting XP grants a 1.5s speed boost",
+      "icon": "⇡",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "blood_converter",
+      "name": "Blood Converter",
+      "description": "XP orbs restore 0.5 HP on collection",
+      "icon": "♦",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "hermits_shell",
+      "name": "Hermit's Shell",
+      "description": "Regenerate 1 HP/s while inside tower recharge radius",
+      "icon": "🐢",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": []
+    },
+    {
+      "id": "home_soil",
+      "name": "Home Soil",
+      "description": "Tower deals 15% more damage while player is inside tower radius",
+      "icon": "⌂",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": []
+    },
+    {
+      "id": "static_tower",
+      "name": "Static Tower",
+      "description": "Staying within half the tower radius for 5s grants +30% fire rate and damage",
+      "icon": "◉",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "phantom_afterimage",
+      "name": "Phantom Afterimage",
+      "description": "Dashing spawns a decoy at your position that draws enemy aggro for 3s",
+      "icon": "👤",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "xp_magnet_core",
+      "name": "XP Magnet Core",
+      "description": "While inside tower radius, XP orbs are also pulled toward the tower",
+      "icon": "⊛",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "stabilizer_core",
+      "name": "Stabilizer Core",
+      "description": "Tower energy decays 15% slower per level",
+      "icon": "▣",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": []
+    },
+    {
+      "id": "extra_eye",
+      "name": "Extra Eye",
+      "description": "While inside tower range, a second ring of fire mirrors tower weapons at 50% effectiveness around the player",
+      "icon": "👁",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": []
+    },
+    {
+      "id": "weapon_pulse",
+      "name": "Pulse Emitter",
+      "description": "Add a Pulse Emitter (radial bursts damaging all enemies in radius)",
+      "icon": "◎",
+      "category": "weapon",
+      "weaponType": "pulse",
+      "maxLevel": 4,
+      "prerequisites": []
+    },
+    {
+      "id": "weapon_drones",
+      "name": "Defense Drones",
+      "description": "Add a Defense Drone bay (orbiting autonomous attackers)",
+      "icon": "⬡",
+      "category": "weapon",
+      "weaponType": "drones",
+      "maxLevel": 4,
+      "prerequisites": []
+    },
+    {
+      "id": "drone_swarm",
+      "name": "Drone Swarm",
+      "description": "Increase max active drones by 1",
+      "icon": "⬡",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": ["weapon_drones"]
+    },
+    {
+      "id": "drone_reinforcement",
+      "name": "Drone Reinforcement",
+      "description": "Drones gain +20 HP",
+      "icon": "🛡",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": ["weapon_drones"]
+    },
+    {
+      "id": "drone_arsenal",
+      "name": "Drone Arsenal",
+      "description": "Drones deal 25% more damage",
+      "icon": "🔧",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": ["weapon_drones"]
+    },
+    {
+      "id": "drone_overclock",
+      "name": "Drone Overclock",
+      "description": "Drones attack 20% faster",
+      "icon": "⏩",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": ["weapon_drones"]
+    },
+    {
+      "id": "drone_guard",
+      "name": "Drone Guard",
+      "description": "Drones orbit the player instead of the tower, intercepting enemy contact",
+      "icon": "🛸",
+      "category": "general",
+      "maxLevel": 1,
+      "prerequisites": ["weapon_drones"]
+    },
+    {
+      "id": "drone_efficiency",
+      "name": "Drone Efficiency",
+      "description": "Drones respawn 25% faster after destruction",
+      "icon": "♻",
+      "category": "general",
+      "maxLevel": 999,
+      "prerequisites": ["weapon_drones"]
+    }
+  ]
+}

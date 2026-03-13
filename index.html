@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tower Defender</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="gameCanvas"></canvas>
+
+<!-- ── UI Overlay ─────────────────────────────────────────────── -->
+<div id="ui-overlay">
+
+  <!-- HUD -->
+  <div id="hud">
+    <div class="hud-bar">
+      <div class="hud-bar-track">
+        <div class="hud-bar-fill" id="hp-fill" style="width:100%"></div>
+      </div>
+      <div class="hud-label" id="hp-text">HP 100 / 100</div>
+    </div>
+    <div class="hud-bar">
+      <div class="hud-bar-track">
+        <div class="hud-bar-fill" id="energy-fill" style="width:100%"></div>
+      </div>
+      <div class="hud-label" id="energy-text">PWR 50 / 50</div>
+    </div>
+    <div class="hud-bar">
+      <div class="hud-bar-track">
+        <div class="hud-bar-fill" id="xp-fill" style="width:0%"></div>
+      </div>
+      <div class="hud-label" id="xp-text">XP 0 / 100  LVL 1</div>
+    </div>
+    <div class="hud-bar">
+      <div class="hud-bar-track" id="dash-track">
+        <div class="hud-bar-fill" id="dash-indicator" style="width:100%"></div>
+      </div>
+      <div class="hud-label">DASH</div>
+    </div>
+  </div>
+
+  <!-- Wave / Level info (top center) -->
+  <div id="wave-panel">
+    <div id="wave-num">WAVE 1</div>
+    <div id="level-num">LEVEL 1</div>
+  </div>
+
+  <!-- Active wave modifier badges -->
+  <div id="active-modifiers"></div>
+
+  <!-- Endless tide kill progress -->
+  <div id="endless-tide-bar">
+    <div class="hud-bar-track">
+      <div class="hud-bar-fill" id="endless-fill" style="width:0%;background:#44aaff"></div>
+    </div>
+    <div class="hud-label" id="endless-text">KILLS 0 / 0</div>
+  </div>
+
+  <!-- Weapon slots (bottom left) -->
+  <div id="weapon-slots"></div>
+
+  <!-- Controls hint (bottom right) -->
+  <div id="controls-hint">
+    WASD / ARROWS — Move<br>
+    SPACE — Dash (invulnerable)
+  </div>
+
+  <!-- ── Level-up upgrade picker ─────────────────────────────── -->
+  <div class="overlay hidden" id="upgrade-overlay">
+    <div class="panel">
+      <div class="panel-title" id="upgrade-title">LEVEL UP — Choose an Upgrade</div>
+      <div class="cards-row" id="upgrade-cards"></div>
+    </div>
+  </div>
+
+  <!-- ── Weapon slot picker ──────────────────────────────────── -->
+  <div class="overlay hidden" id="slot-picker">
+    <div class="panel">
+      <div class="panel-title" id="slot-picker-title">Apply to which weapon?</div>
+      <div class="cards-row" id="slot-picker-cards"></div>
+    </div>
+  </div>
+
+  <!-- ── Wave modifier picker ────────────────────────────────── -->
+  <div class="overlay hidden" id="wave-mod-overlay">
+    <div class="panel">
+      <div class="panel-title">CHOOSE WAVE MODIFIER</div>
+      <div class="panel-subtitle">This modifier applies to the next wave only — drawbacks affect enemies</div>
+      <div class="cards-row" id="wave-mod-cards"></div>
+    </div>
+  </div>
+
+  <!-- ── Enemy upgrade picker (end of wave) ─────────────────── -->
+  <div class="overlay hidden" id="enemy-upgrade-overlay">
+    <div class="panel">
+      <div class="panel-title">WAVE COMPLETE</div>
+      <div class="panel-subtitle">Choose one enemy upgrade — these will affect all future waves</div>
+      <div class="cards-row" id="enemy-upgrade-cards"></div>
+    </div>
+  </div>
+
+  <!-- ── Downtime countdown ─────────────────────────────────── -->
+  <div class="overlay hidden" id="downtime-overlay">
+    <div class="panel">
+      <div class="panel-title">NEXT WAVE INCOMING</div>
+      <div id="downtime-count">5</div>
+      <div id="downtime-label">seconds</div>
+    </div>
+  </div>
+
+  <!-- ── Game Over ────────────────────────────────────────────── -->
+  <div class="overlay hidden" id="game-over-overlay">
+    <div class="panel">
+      <div id="game-over-title">TOWER LOST</div>
+      <div class="go-stat" id="game-over-wave">Survived 0 waves</div>
+      <div class="go-stat" id="game-over-level">Reached level 1</div>
+      <button id="restart-btn">PLAY AGAIN</button>
+    </div>
+  </div>
+
+</div><!-- /ui-overlay -->
+
+<!-- Script load order matters: utils first, main last -->
+<script src="js/utils.js"></script>
+<script src="js/input.js"></script>
+<script src="js/camera.js"></script>
+<script src="js/weapon.js"></script>
+<script src="js/xp.js"></script>
+<script src="js/enemy.js"></script>
+<script src="js/player.js"></script>
+<script src="js/tower.js"></script>
+<script src="js/wave.js"></script>
+<script src="js/wavemodifier.js"></script>
+<script src="js/upgrades.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+{
+  "enemies": [
+    {
+      "id": "grunt",
+      "name": "Grunt",
+      "hp": 10,
+      "damage": 8,
+      "speed": 85,
+      "radius": 13,
+      "xpValue": 1,
+      "amountPerDifficultyLevel": 6,
+      "color": "#e74c3c",
+      "glowColor": "#ff6b6b",
+      "ai": "direct",
+      "contactDamageCooldown": 0.8
+    },
+    {
+      "id": "bruiser",
+      "name": "Bruiser",
+      "hp": 40,
+      "damage": 18,
+      "speed": 50,
+      "radius": 22,
+      "xpValue": 4,
+      "amountPerDifficultyLevel": 3,
+      "color": "#e67e22",
+      "glowColor": "#f39c12",
+      "ai": "direct",
+      "contactDamageCooldown": 1.0
+    },
+    {
+      "id": "speeder",
+      "name": "Speeder",
+      "hp": 6,
+      "damage": 5,
+      "speed": 160,
+      "radius": 9,
+      "xpValue": 2,
+      "amountPerDifficultyLevel": 8,
+      "color": "#f1c40f",
+      "glowColor": "#f9e400",
+      "ai": "direct",
+      "contactDamageCooldown": 0.5
+    },
+    {
+      "id": "summoner",
+      "name": "Summoner",
+      "hp": 30,
+      "damage": 5,
+      "speed": 50,
+      "radius": 18,
+      "xpValue": 6,
+      "amountPerDifficultyLevel": 2,
+      "color": "#9b59b6",
+      "glowColor": "#bf5fff",
+      "ai": "summoner",
+      "contactDamageCooldown": 1.0,
+      "summonType": "grunt",
+      "summonInterval": 5.0,
+      "summonStayDistance": 260,
+      "summonCount": 2
+    },
+    {
+      "id": "tank",
+      "name": "Tank",
+      "hp": 120,
+      "damage": 25,
+      "speed": 35,
+      "radius": 30,
+      "xpValue": 10,
+      "amountPerDifficultyLevel": 1,
+      "color": "#2c3e50",
+      "glowColor": "#4a6080",
+      "ai": "direct",
+      "contactDamageCooldown": 1.5
+    }
+  ]
+}
