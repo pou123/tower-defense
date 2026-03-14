@@ -160,17 +160,15 @@ class Player {
       ctx.fill();
     }
 
-    // ── Glow (larger when dashing) ──
+    // ── Simple glow / outline (no gradients)
     const glowR = this.dashing ? this.radius * 2.2 : this.radius + 14;
-    const glowAlpha = this.dashing ? 0.8 : 0.4 + pulse * 0.2;
     const glowColor = this.invulnerable ? '#00ffff' : '#00c8ff';
-    const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, glowR);
-    grad.addColorStop(0, glowColor + Math.round(glowAlpha * 255).toString(16).padStart(2,'0'));
-    grad.addColorStop(1, glowColor + '00');
     ctx.beginPath();
     ctx.arc(this.x, this.y, glowR, 0, Math.PI * 2);
-    ctx.fillStyle = grad;
+    ctx.fillStyle = glowColor;
+    ctx.globalAlpha = 0.18;
     ctx.fill();
+    ctx.globalAlpha = 1;
 
     // ── Body circle ──
     ctx.beginPath();

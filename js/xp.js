@@ -71,13 +71,10 @@ class XPOrb {
     const bob = Math.sin(this.bobTimer) * 3;
     const py  = this.y + bob;
 
-    // Glow
-    const g = ctx.createRadialGradient(this.x, py, 0, this.x, py, this.radius + 8);
-    g.addColorStop(0, 'rgba(180, 80, 255, 0.7)');
-    g.addColorStop(1, 'rgba(180, 80, 255, 0)');
+    // Glow (solid, no gradient)
     ctx.beginPath();
     ctx.arc(this.x, py, this.radius + 8, 0, Math.PI * 2);
-    ctx.fillStyle = g;
+    ctx.fillStyle = 'rgba(180, 80, 255, 0.35)';
     ctx.fill();
 
     // Orb

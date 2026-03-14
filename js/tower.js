@@ -122,16 +122,16 @@ class Tower {
       ctx.arc(this.x, this.y, slowRadius, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(100,200,255,${alpha})`;
       ctx.fill();
-      ctx.strokeStyle = `rgba(100,200,255,0.2)`;
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = `rgba(100,200,255,0.3)`;
+      ctx.lineWidth = 3;
       ctx.stroke();
     }
 
-    // ── Recharge radius ──
+    // ── Recharge radius (thicker)
     ctx.beginPath();
     ctx.arc(this.x, this.y, Game.stats.towerRechargeRadius, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(0, 200, 100, 0.12)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(0, 200, 100, 0.16)';
+    ctx.lineWidth = 4;
     ctx.stroke();
 
     // ── Outer glow ──
@@ -141,13 +141,13 @@ class Tower {
                       this.emergencyActive ? '#ff8800' :
                       energyPct > 0.5 ? '#00ffaa' : '#ffaa00';
 
-    const grad = ctx.createRadialGradient(this.x, this.y, this.radius * 0.5, this.x, this.y, this.radius + 30);
-    grad.addColorStop(0, glowColor + Math.round(glowAlpha * 255).toString(16).padStart(2,'0'));
-    grad.addColorStop(1, glowColor + '00');
+    // Outer glow simplified (solid fill)
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius + 30, 0, Math.PI * 2);
-    ctx.fillStyle = grad;
+    ctx.fillStyle = glowColor;
+    ctx.globalAlpha = 0.18;
     ctx.fill();
+    ctx.globalAlpha = 1;
 
     // ── Hexagonal body ──
     const sides = 6;

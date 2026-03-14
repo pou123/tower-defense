@@ -6,6 +6,7 @@
 class Projectile {
   constructor(x, y, angle, speed, damage, range, color) {
     this.x = x; this.y = y;
+    this.prevX = x; this.prevY = y;
     this.vx = Math.cos(angle) * speed;
     this.vy = Math.sin(angle) * speed;
     this.damage  = damage;
@@ -30,6 +31,8 @@ class Projectile {
   }
 
   update(dt) {
+    this.prevX = this.x;
+    this.prevY = this.y;
     const step = Utils.dist(0, 0, this.vx, this.vy) * dt;
     this.x += this.vx * dt;
     this.y += this.vy * dt;
@@ -310,8 +313,6 @@ class TeslaArc {
     ctx.save();
     ctx.strokeStyle = `rgba(180,100,255,${alpha})`;
     ctx.lineWidth = 2 + alpha * 3;
-    ctx.shadowBlur = 15;
-    ctx.shadowColor = '#bf5fff';
     ctx.beginPath();
     ctx.moveTo(this.points[0].x, this.points[0].y);
     for (let i = 1; i < this.points.length; i++) {
@@ -471,6 +472,21 @@ class Weapon {
     return this.config.damage * mult;
   }
   _effectiveRange()     { return this.config.range     * Game.stats.towerRangeMult; }
+
+  // Predict target position based on its current velocity and projectile speed.
+  // This gives a simple leading aim so fast bullets are more likely to hit.
+  _predictTargetPosition(tower, target, projSpeed) {
+    if (!target) return { x: tower.x, y: tower.y };
+    const dx = target.x - tower.x;
+    const dy = target.y - tower.y;
+    const dist = Math.hypot(dx, dy);
+    if (dist === 0 || projSpeed === 0) return { x: target.x, y: target.y };
+    const time = dist / projSpeed;
+    const px = target.x + (target.vx || 0) * time;
+    const py = target.y + (target.vy || 0) * time;
+    return { x: px, y: py };
+  }
+
   _overchargeBonus()    {
     if (!Game.stats.hasOvercharge) return 1;
     const full = Game.tower.energy >= Game.stats.towerEnergyMax;
@@ -535,7 +551,8 @@ class GunWeapon extends Weapon {
   }
 
   _fireAt(tower, target) {
-    const angle = Utils.angle(tower.x, tower.y, target.x, target.y);
+    const aim = this._predictTargetPosition(tower, target, this.config.bulletSpeed);
+    const angle = Utils.angle(tower.x, tower.y, aim.x, aim.y);
     const dmg   = this._effectiveDamage() * this._overchargeBonus();
     const proj  = new Projectile(tower.x, tower.y, angle,
       this.config.bulletSpeed, dmg, this._effectiveRange(), '#ffe566');
@@ -572,7 +589,8 @@ class ShotgunWeapon extends Weapon {
   }
 
   _fireAt(tower, target) {
-    const baseAngle = Utils.angle(tower.x, tower.y, target.x, target.y);
+    const aim = this._predictTargetPosition(tower, target, this.config.bulletSpeed);
+    const baseAngle = Utils.angle(tower.x, tower.y, aim.x, aim.y);
     const spreadLvl = this.upgradeLevel('spread');
     const pellets   = this.config.pellets + spreadLvl * 2;
     const spread    = this.config.spread  + spreadLvl * 0.12;
@@ -617,7 +635,8 @@ class RifleWeapon extends Weapon {
   }
 
   _fireAt(tower, target) {
-    const angle = Utils.angle(tower.x, tower.y, target.x, target.y);
+    const aim = this._predictTargetPosition(tower, target, this.config.bulletSpeed);
+    const angle = Utils.angle(tower.x, tower.y, aim.x, aim.y);
     const dmg   = this._effectiveDamage() * this._overchargeBonus();
     const proj  = new Projectile(tower.x, tower.y, angle,
       this.config.bulletSpeed, dmg, this._effectiveRange(), '#66ffaa');
@@ -657,7 +676,8 @@ class SniperWeapon extends Weapon {
   }
 
   _fireAt(tower, target) {
-    const angle = Utils.angle(tower.x, tower.y, target.x, target.y);
+    const aim = this._predictTargetPosition(tower, target, this.config.bulletSpeed);
+    const angle = Utils.angle(tower.x, tower.y, aim.x, aim.y);
     const dmg   = this._effectiveDamage() * this._overchargeBonus();
     const proj  = new Projectile(tower.x, tower.y, angle,
       this.config.bulletSpeed, dmg, this._effectiveRange(), '#ffffff');
@@ -743,6 +763,7 @@ class MissileLauncherWeapon extends Weapon {
   }
 
   _fireAt(tower, target) {
+    const aim = this._predictTargetPosition(tower, target, this.config.speed);
     const dmg    = this._effectiveDamage() * this._overchargeBonus();
     const offset = Utils.randFloat(0, Math.PI * 2);
     const missile = new Missile(
@@ -751,7 +772,7 @@ class MissileLauncherWeapon extends Weapon {
       target, dmg, this.config.explosionRadius,
       this.config.speed, this.config.turnSpeed, '#ff6040'
     );
-    missile.angle = Utils.angle(tower.x, tower.y, target.x, target.y);
+    missile.angle = Utils.angle(tower.x, tower.y, aim.x, aim.y);
     missile.seeking = this.upgradeLevel('seeking');
     if (this.hasUpgrade('cryo_rounds'))    missile.cryo = true;
     if (this.hasUpgrade('armor_piercing')) missile.armorPiercing = true;
@@ -938,8 +959,6 @@ class LaserWeapon extends Weapon {
     const ey = tower.y + Math.sin(this.angle) * range;
 
     ctx.save();
-    ctx.shadowBlur = 18;
-    ctx.shadowColor = '#00ffff';
     ctx.beginPath();
     ctx.moveTo(tower.x, tower.y);
     ctx.lineTo(ex, ey);

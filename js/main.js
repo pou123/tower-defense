@@ -34,24 +34,24 @@ const CONFIG = {
   // ── Weapons ─────────────────────────────────────────────────
   GUN_FIRE_RATE:     3,
   GUN_DAMAGE:        10,
-  GUN_BULLET_SPEED:  420,
+  GUN_BULLET_SPEED:  660,
   GUN_BASE_RANGE:    320,
 
   SHOTGUN_FIRE_RATE:     1,
   SHOTGUN_DAMAGE:        9,
   SHOTGUN_PELLETS:       5,
   SHOTGUN_SPREAD:        0.32,
-  SHOTGUN_BULLET_SPEED:  360,
+  SHOTGUN_BULLET_SPEED:  540,
   SHOTGUN_RANGE:         210,
 
   RIFLE_FIRE_RATE:     0.8,
   RIFLE_DAMAGE:        38,
-  RIFLE_BULLET_SPEED:  620,
+  RIFLE_BULLET_SPEED:  930,
   RIFLE_RANGE:         520,
 
   SNIPER_FIRE_RATE:     0.28,
   SNIPER_DAMAGE:        85,
-  SNIPER_BULLET_SPEED:  950,
+  SNIPER_BULLET_SPEED: 1400,
   SNIPER_RANGE:         820,
 
   MORTAR_FIRE_RATE:        0.4,
@@ -63,7 +63,7 @@ const CONFIG = {
   MISSILE_DAMAGE:           42,
   MISSILE_RANGE:            460,
   MISSILE_EXPLOSION_RADIUS: 62,
-  MISSILE_SPEED:            210,
+  MISSILE_SPEED:            320,
   MISSILE_TURN_SPEED:       3.0,
 
   FLAMETHROWER_FIRE_RATE:     22,
@@ -350,6 +350,19 @@ const Game = {
 
     // Projectiles & particles
     for (const p of this.projectiles) p.update(dt);
+
+    // Bullet collision (continuous) — avoids missing fast projectiles
+    for (const p of this.projectiles) {
+      if (p.dead || !(p instanceof Projectile)) continue;
+      for (const e of this.enemies) {
+        if (e.dead) continue;
+        if (Utils.segmentCircleCollide(p.prevX, p.prevY, p.x, p.y, e.x, e.y, e.radius)) {
+          p.onHitEnemy(e);
+          if (p.dead) break;
+        }
+      }
+    }
+
     Particles.update(dt);
 
     // Check projectile-explosive-tip triggers (rifle)
@@ -569,14 +582,14 @@ const Game = {
 
     // ── Clear ──
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#080c12';
+    ctx.fillStyle = '#2d2a1f';
     ctx.fillRect(0, 0, W, H);
 
     // ── Camera transform ──
     Camera.apply(ctx);
 
     // ── Arena background ──
-    ctx.fillStyle = '#0a0f18';
+    ctx.fillStyle = '#2f2c20';
     ctx.fillRect(0, 0, this.arenaW, this.arenaH);
 
     // Hex grid pattern

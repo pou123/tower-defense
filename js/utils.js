@@ -65,6 +65,28 @@ const Utils = {
     return Utils.distSq(px, py, cx, cy) < r * r;
   },
 
+  // Check segment (x1,y1)-(x2,y2) against circle center (cx,cy) radius r.
+  // This is used to avoid missing fast-moving projectiles.
+  segmentCircleCollide(x1, y1, x2, y2, cx, cy, r) {
+    const vx = x2 - x1;
+    const vy = y2 - y1;
+    const wx = cx - x1;
+    const wy = cy - y1;
+    const c1 = vx * wx + vy * wy;
+    if (c1 <= 0) {
+      // Closest to start point
+      return Utils.distSq(x1, y1, cx, cy) <= r * r;
+    }
+    const c2 = vx * vx + vy * vy;
+    if (c2 <= 0) {
+      return Utils.distSq(x1, y1, cx, cy) <= r * r;
+    }
+    const t = c1 / c2;
+    const bx = x1 + vx * t;
+    const by = y1 + vy * t;
+    return Utils.distSq(bx, by, cx, cy) <= r * r;
+  },
+
   // Angle difference (shortest path), returns -PI to PI
   angleDiff(a, b) {
     let d = b - a;
@@ -90,21 +112,21 @@ const Utils = {
     return Utils.dist(px, py, ax + t * dx, ay + t * dy);
   },
 
-  // Draw a glowing circle on ctx
+  // Draw a solid circle (no glow)
   drawGlowCircle(ctx, x, y, r, color, glowColor, glowSize = 15) {
-    const grad = ctx.createRadialGradient(x, y, r * 0.3, x, y, r + glowSize);
-    grad.addColorStop(0, glowColor + 'aa');
-    grad.addColorStop(1, glowColor + '00');
     ctx.beginPath();
     ctx.arc(x, y, r + glowSize, 0, Math.PI * 2);
-    ctx.fillStyle = grad;
+    ctx.fillStyle = glowColor;
+    ctx.globalAlpha = 0.25;
     ctx.fill();
+    ctx.globalAlpha = 1;
 
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.fillStyle = color;
     ctx.fill();
   },
+
 
   // Hex grid background pattern
   drawHexGrid(ctx, camX, camY, viewW, viewH, arenaW, arenaH) {

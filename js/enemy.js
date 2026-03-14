@@ -37,6 +37,10 @@ class Enemy {
     this.dying      = false;
     this.dyingTimer = 0;
 
+    // Velocity for predictive targeting
+    this.vx = 0;
+    this.vy = 0;
+
     // Status effects
     this.burnDmgPerSec  = 0;
     this.burnTimer      = 0;
@@ -74,10 +78,19 @@ class Enemy {
     const effectiveSpeed = this.speed * this.slowFactor;
 
     // ── AI behavior ──
+    const prevX = this.x;
+    const prevY = this.y;
+
     switch (this.ai) {
       case 'direct':   this._aiDirect(dt, player, tower, effectiveSpeed); break;
       case 'summoner': this._aiSummoner(dt, player, tower, effectiveSpeed, spawnCallback); break;
       default:         this._aiDirect(dt, player, tower, effectiveSpeed);
+    }
+
+    // Track velocity for lead targeting
+    if (dt > 0) {
+      this.vx = (this.x - prevX) / dt;
+      this.vy = (this.y - prevY) / dt;
     }
 
     // ── Clamp to arena ──
@@ -226,16 +239,15 @@ class Enemy {
       ctx.fill();
     }
 
-    // Glow
+    // Glow (solid, no gradient)
     const glowAlpha = this.hitFlash > 0 ? 0.9 : 0.4;
     const gColor = this.hitFlash > 0 ? '#ffffff' : this.glowColor;
-    const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius + 12);
-    g.addColorStop(0, gColor + Math.round(glowAlpha * 200).toString(16).padStart(2,'0'));
-    g.addColorStop(1, gColor + '00');
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius + 12, 0, Math.PI * 2);
-    ctx.fillStyle = g;
+    ctx.fillStyle = gColor;
+    ctx.globalAlpha = glowAlpha * 0.3;
     ctx.fill();
+    ctx.globalAlpha = 1;
 
     // Body
     ctx.beginPath();
