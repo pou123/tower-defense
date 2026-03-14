@@ -68,23 +68,27 @@ const Utils = {
   // Check segment (x1,y1)-(x2,y2) against circle center (cx,cy) radius r.
   // This is used to avoid missing fast-moving projectiles.
   segmentCircleCollide(x1, y1, x2, y2, cx, cy, r) {
+    const t = Utils.segmentCircleClosestT(x1, y1, x2, y2, cx, cy, r);
+    return t !== null;
+  },
+
+  // Return the closest t [0..1] along the segment where it intersects the circle, or null if none.
+  segmentCircleClosestT(x1, y1, x2, y2, cx, cy, r) {
     const vx = x2 - x1;
     const vy = y2 - y1;
     const wx = cx - x1;
     const wy = cy - y1;
     const c1 = vx * wx + vy * wy;
-    if (c1 <= 0) {
-      // Closest to start point
-      return Utils.distSq(x1, y1, cx, cy) <= r * r;
-    }
     const c2 = vx * vx + vy * vy;
     if (c2 <= 0) {
-      return Utils.distSq(x1, y1, cx, cy) <= r * r;
+      return Utils.distSq(x1, y1, cx, cy) <= r * r ? 0 : null;
     }
-    const t = c1 / c2;
+    let t = c1 / c2;
+    if (t < 0) t = 0;
+    if (t > 1) t = 1;
     const bx = x1 + vx * t;
     const by = y1 + vy * t;
-    return Utils.distSq(bx, by, cx, cy) <= r * r;
+    return Utils.distSq(bx, by, cx, cy) <= r * r ? t : null;
   },
 
   // Angle difference (shortest path), returns -PI to PI

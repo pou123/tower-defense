@@ -6,7 +6,8 @@ class Tower {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.radius = 28;
+    // Make turret larger so player can stand inside
+    this.radius = 42;
 
     this.energy       = CONFIG.TOWER_ENERGY_MAX;
     this.weapons      = []; // Array of Weapon instances (null = empty slot)
@@ -148,6 +149,17 @@ class Tower {
     ctx.globalAlpha = 0.18;
     ctx.fill();
     ctx.globalAlpha = 1;
+
+    // ── Weapon range visualization ──
+    for (const w of this.weapons) {
+      if (!w) continue;
+      const range = w._effectiveRange();
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, range, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(0, 200, 255, 0.12)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
 
     // ── Hexagonal body ──
     const sides = 6;

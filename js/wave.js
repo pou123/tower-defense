@@ -142,7 +142,7 @@ const WaveManager = {
 
   // Generate 3 random enemy upgrade options for the end-of-wave picker
   generateEnemyUpgradeOptions() {
-    const defs = Game.enemyDefs;
+    const defs = Game.enemyDefs.filter(d => this.composition[d.id] > 0);
     const types = ['add_enemy', 'buff_hp', 'buff_speed', 'buff_damage'];
     const options = [];
 

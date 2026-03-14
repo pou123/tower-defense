@@ -16,6 +16,7 @@ const UI = {
       xpFill:             document.getElementById('xp-fill'),
       xpText:             document.getElementById('xp-text'),
       waveNum:            document.getElementById('wave-num'),
+      difficultyNum:      document.getElementById('difficulty-num'),
       levelNum:           document.getElementById('level-num'),
       dashIndicator:      document.getElementById('dash-indicator'),
 
@@ -62,7 +63,9 @@ const UI = {
     this.els.energyText.textContent = `PWR ${Math.floor(g.tower.energy)} / ${g.stats.towerEnergyMax}`;
     this.els.xpFill.style.width     = xpPct + '%';
     this.els.xpText.textContent     = `XP  ${Math.floor(g.xp)} / ${g.xpThreshold}  LVL ${g.level}`;
-    this.els.waveNum.textContent    = `WAVE ${g.wave}`;
+    this.els.waveNum.textContent       = `WAVE ${g.wave}`;
+    this.els.difficultyNum.textContent = `DIFF ${Math.round(g.totalDifficulty)}`;
+    this.els.levelNum.textContent      = `LEVEL ${g.level}`;
     this.els.dashIndicator.style.width = dashPct + '%';
     this.els.hpFill.style.background =
       hpPct > 50 ? '#00ff88' : hpPct > 25 ? '#ffaa00' : '#ff3333';

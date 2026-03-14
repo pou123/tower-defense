@@ -138,8 +138,16 @@ const WaveModifiers = {
   },
 
   resetForWave() {
+    // Clears any active modifier (used when starting a fresh game)
     this.active = [];
     Game.waveModState = this._freshState();
+  },
+
+  // Set the current active modifier (replaces any previous modifier)
+  setModifier(def) {
+    this.active = [def];
+    Game.waveModState = this._freshState();
+    def.apply();
   },
 
   // Generate pick options (no duplicates of what's in active)

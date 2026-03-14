@@ -19,8 +19,8 @@ const CONFIG = {
   ARENA_SCALE: 2,                // arena = ARENA_SCALE * screen size
 
   // ── XP ──────────────────────────────────────────────────────
-  XP_BASE_THRESHOLD:  100,
-  XP_THRESHOLD_STEP:  25,
+  XP_BASE_THRESHOLD:  10,
+  XP_THRESHOLD_STEP:  10,
 
   // ── Waves ───────────────────────────────────────────────────
   WAVE_DOWNTIME_SECONDS:    5,
@@ -265,10 +265,14 @@ const Game = {
     const dt = Math.min((timestamp - this.lastTime) / 1000, 0.05); // cap at 50ms
     this.lastTime = timestamp;
 
-    switch (this.state) {
-      case 'playing':       this._updatePlaying(dt); break;
-      case 'downtime':      this._updateDowntime(dt); break;
-      // level_up, slot_pick, enemy_upgrade, wave_modifier: frozen — no update
+    // Always update gameplay (player/enemies/projectiles) even during downtime
+    if (this.state !== 'game_over') {
+      this._updatePlaying(dt);
+    }
+
+    // Separate downtime timer (UI only)
+    if (this.state === 'downtime') {
+      this._updateDowntime(dt);
     }
 
     this._render();
@@ -351,15 +355,21 @@ const Game = {
     // Projectiles & particles
     for (const p of this.projectiles) p.update(dt);
 
-    // Bullet collision (continuous) — avoids missing fast projectiles
+    // Bullet collision (continuous): find first enemy intersected along the segment.
     for (const p of this.projectiles) {
       if (p.dead || !(p instanceof Projectile)) continue;
+      let bestT = 1;
+      let bestEnemy = null;
       for (const e of this.enemies) {
         if (e.dead) continue;
-        if (Utils.segmentCircleCollide(p.prevX, p.prevY, p.x, p.y, e.x, e.y, e.radius)) {
-          p.onHitEnemy(e);
-          if (p.dead) break;
+        const t = Utils.segmentCircleClosestT(p.prevX, p.prevY, p.x, p.y, e.x, e.y, e.radius);
+        if (t !== null && t < bestT) {
+          bestT = t;
+          bestEnemy = e;
         }
+      }
+      if (bestEnemy) {
+        p.onHitEnemy(bestEnemy);
       }
     }
 
@@ -443,10 +453,20 @@ const Game = {
   _onWaveComplete() {
     this.state = 'enemy_upgrade';
     const options = WaveManager.generateEnemyUpgradeOptions();
+    if (options.length === 0) {
+      // No eligible enemy types to upgrade; continue.
+      if (this.wave % 6 === 0) this._showWaveModifierPicker();
+      else this._startDowntime();
+      return;
+    }
     UI.showEnemyUpgradePicker(options, (opt) => {
       WaveManager.applyEnemyUpgrade(opt);
-      // Now show wave modifier pick
-      this._showWaveModifierPicker();
+      // Wave modifiers only appear every 6 waves and replace the previous one.
+      if (this.wave % 6 === 0) {
+        this._showWaveModifierPicker();
+      } else {
+        this._startDowntime();
+      }
     });
   },
 
@@ -458,7 +478,7 @@ const Game = {
     }
     this.state = 'wave_modifier';
     UI.showWaveModifierPicker(options, (opt) => {
-      WaveModifiers.applyModifier(opt);
+      WaveModifiers.setModifier(opt);
       this._startDowntime();
     });
   },
@@ -476,7 +496,6 @@ const Game = {
       UI.hideDowntime();
       this.wave++;
       this.waveKills = 0;
-      WaveModifiers.resetForWave();
       WaveManager.spawnWave();
       this.state = 'playing';
     }
@@ -582,14 +601,14 @@ const Game = {
 
     // ── Clear ──
     ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = '#2d2a1f';
+    ctx.fillStyle = '#3b372d';
     ctx.fillRect(0, 0, W, H);
 
     // ── Camera transform ──
     Camera.apply(ctx);
 
     // ── Arena background ──
-    ctx.fillStyle = '#2f2c20';
+    ctx.fillStyle = '#3f3a2f';
     ctx.fillRect(0, 0, this.arenaW, this.arenaH);
 
     // Hex grid pattern
