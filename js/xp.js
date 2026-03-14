@@ -48,33 +48,20 @@ class XPOrb {
     const d = Utils.dist(this.x, this.y, player.x, player.y);
     const pickupR = Game.stats.xpRadius;
 
-    // Magnetize if inside collection radius
+    // Instantly collect when within range
     if (d <= pickupR + this.radius) {
-      this.magnetized = true;
-    }
+      const xpGain = this.getXPValue();
+      Game.addXP(xpGain);
 
-    if (this.magnetized) {
-      if (d <= 4) {
-        // Collected
-        const xpGain = this.getXPValue();
-        Game.addXP(xpGain);
+      // Blood Converter: tiny HP heal per orb
+      if (Game.stats.hasBloodConverter) Game.heal(0.5);
 
-        // Blood Converter: tiny HP heal per orb
-        if (Game.stats.hasBloodConverter) Game.heal(0.5);
-
-        // Momentum Harvest: brief speed boost
-        if (Game.stats.hasMomentumHarvest && Game.player) {
-          Game.player._momentumTimer = 1.5;
-        }
-
-        this.dead = true;
-        return;
+      // Momentum Harvest: brief speed boost
+      if (Game.stats.hasMomentumHarvest && Game.player) {
+        Game.player._momentumTimer = 1.5;
       }
-      // Pull toward player
-      const nx = (player.x - this.x) / d;
-      const ny = (player.y - this.y) / d;
-      this.x += nx * this.magnetSpeed * dt;
-      this.y += ny * this.magnetSpeed * dt;
+
+      this.dead = true;
     }
   }
 

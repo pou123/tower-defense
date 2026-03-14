@@ -19,8 +19,8 @@ const CONFIG = {
   ARENA_SCALE: 2,                // arena = ARENA_SCALE * screen size
 
   // ── XP ──────────────────────────────────────────────────────
-  XP_BASE_THRESHOLD:  10,
-  XP_THRESHOLD_STEP:  10,
+  XP_BASE_THRESHOLD:  5,
+  XP_THRESHOLD_STEP:  5,
 
   // ── Waves ───────────────────────────────────────────────────
   WAVE_DOWNTIME_SECONDS:    5,
