@@ -9,6 +9,11 @@ class XPOrb {
     this.baseValue = baseValue;
     this.radius = 6;
     this.dead   = false;
+
+    // XP orb lifetime: fades out and blinks before disappearing.
+    this.life = 7.0;
+    this.maxLife = 7.0;
+
     this.bobTimer = Math.random() * Math.PI * 2;
     this.magnetized = false; // pulled toward player
     this.magnetSpeed = 180;
@@ -32,6 +37,12 @@ class XPOrb {
   }
 
   update(dt, player) {
+    this.life -= dt;
+    if (this.life <= 0) {
+      this.dead = true;
+      return;
+    }
+
     this.bobTimer += dt * 2.5;
 
     const d = Utils.dist(this.x, this.y, player.x, player.y);
@@ -71,25 +82,34 @@ class XPOrb {
     const bob = Math.sin(this.bobTimer) * 3;
     const py  = this.y + bob;
 
+    // Fade + blink as the orb nears end of life
+    const lifeFrac = Math.max(0, this.life / this.maxLife);
+    let alpha = lifeFrac;
+    if (this.life < 1.0) {
+      const blink = Math.floor(this.life * 10) % 2 === 0;
+      alpha *= blink ? 1 : 0.25;
+    }
+    alpha = Math.max(0.1, alpha);
+
     // Glow (solid, no gradient)
     ctx.beginPath();
     ctx.arc(this.x, py, this.radius + 8, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(180, 80, 255, 0.35)';
+    ctx.fillStyle = `rgba(180, 80, 255, ${0.35 * alpha})`;
     ctx.fill();
 
     // Orb
     ctx.beginPath();
     ctx.arc(this.x, py, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = '#bf5fff';
+    ctx.fillStyle = `rgba(191, 95, 255, ${alpha})`;
     ctx.fill();
-    ctx.strokeStyle = '#e0aaff';
+    ctx.strokeStyle = `rgba(224, 170, 255, ${alpha})`;
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
     // Inner sparkle
     ctx.beginPath();
     ctx.arc(this.x - 2, py - 2, 2, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.fillStyle = `rgba(255,255,255,${0.7 * alpha})`;
     ctx.fill();
   }
 }

@@ -134,13 +134,13 @@ html, body {
   align-items: center;
   justify-content: center;
   background: rgba(5, 10, 20, 0.85);
-  backdrop-filter: blur(6px);
+  backdrop-filter: none;
   z-index: 100;
   pointer-events: all;
 }
 
 #downtime-overlay {
-  top: 12px;
+  top: 6px;
   left: 50%;
   transform: translateX(-50%);
   width: auto;

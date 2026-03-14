@@ -160,6 +160,11 @@ const Game = {
   arenaW: 0,
   arenaH: 0,
 
+  // ── Pending enemy-upgrade timer (grace period after wave completion)
+  _pendingEnemyUpgrade: false,
+  _pendingEnemyUpgradeTimer: 0,
+  _pendingEnemyUpgradeDelay: 3.0,
+
   // ── Pending upgrade state ──
   _pendingWeaponUpgradeDef: null,
 
@@ -428,8 +433,17 @@ const Game = {
     }
 
     // ── Check wave complete ──
-    if (WaveModifiers.isWaveComplete() && this.state === 'playing') {
-      this._onWaveComplete();
+    if (WaveModifiers.isWaveComplete() && this.state === 'playing' && !this._pendingEnemyUpgrade) {
+      this._beginEnemyUpgradeDelay();
+    }
+
+    // If we are waiting to show the enemy-upgrade menu, countdown
+    if (this._pendingEnemyUpgrade) {
+      this._pendingEnemyUpgradeTimer -= dt;
+      if (this._pendingEnemyUpgradeTimer <= 0) {
+        this._pendingEnemyUpgrade = false;
+        this._showEnemyUpgradeMenu();
+      }
     }
   },
 
@@ -450,7 +464,13 @@ const Game = {
   // ─────────────────────────────────────────────────────────────
   // WAVE COMPLETE
   // ─────────────────────────────────────────────────────────────
-  _onWaveComplete() {
+  _beginEnemyUpgradeDelay() {
+    if (this._pendingEnemyUpgrade) return;
+    this._pendingEnemyUpgrade = true;
+    this._pendingEnemyUpgradeTimer = this._pendingEnemyUpgradeDelay;
+  },
+
+  _showEnemyUpgradeMenu() {
     this.state = 'enemy_upgrade';
     const options = WaveManager.generateEnemyUpgradeOptions();
     if (options.length === 0) {
@@ -459,6 +479,7 @@ const Game = {
       else this._startDowntime();
       return;
     }
+
     UI.showEnemyUpgradePicker(options, (opt) => {
       WaveManager.applyEnemyUpgrade(opt);
       // Wave modifiers only appear every 6 waves and replace the previous one.

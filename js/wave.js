@@ -112,26 +112,17 @@ const WaveManager = {
   },
 
   _randomSpawnPos() {
-    const margin = CONFIG.ENEMY_SPAWN_MARGIN;
-    // Pick a random edge (0=top,1=right,2=bottom,3=left) or random off-screen pos
-    // We want it far from tower center AND off-screen (or at arena edge)
-    let attempts = 0, x, y;
-    do {
-      const side = Utils.randInt(0, 3);
-      switch (side) {
-        case 0: x = Utils.randFloat(0, Game.arenaW);  y = -margin; break;
-        case 1: x = Game.arenaW + margin;              y = Utils.randFloat(0, Game.arenaH); break;
-        case 2: x = Utils.randFloat(0, Game.arenaW);  y = Game.arenaH + margin; break;
-        case 3: x = -margin;                           y = Utils.randFloat(0, Game.arenaH); break;
-      }
-      // Clamp to inside arena, at edges
-      x = Utils.clamp(x, 0, Game.arenaW);
-      y = Utils.clamp(y, 0, Game.arenaH);
-      attempts++;
-    } while (
-      Utils.dist(x, y, Game.tower.x, Game.tower.y) < CONFIG.ENEMY_MIN_SPAWN_DIST &&
-      attempts < 20
-    );
+    // Spread enemies around the playable area in a more randomized, ring-like pattern
+    // (avoids clustering at the same edges).
+    const minDist = CONFIG.ENEMY_MIN_SPAWN_DIST;
+    const maxDist = Math.max(Game.arenaW, Game.arenaH) * 0.9;
+
+    const angle = Utils.randFloat(0, Math.PI * 2);
+    const dist = Utils.randFloat(minDist, maxDist);
+
+    const x = Game.tower.x + Math.cos(angle) * dist;
+    const y = Game.tower.y + Math.sin(angle) * dist;
+
     return { x, y };
   },
 
@@ -142,17 +133,27 @@ const WaveManager = {
 
   // Generate 3 random enemy upgrade options for the end-of-wave picker
   generateEnemyUpgradeOptions() {
-    const defs = Game.enemyDefs.filter(d => this.composition[d.id] > 0);
-    const types = ['add_enemy', 'buff_hp', 'buff_speed', 'buff_damage'];
+    const defs = Game.enemyDefs;
+    const spawnedIds = new Set(Object.keys(this.composition).filter(id => this.composition[id] > 0));
+
+    // Bias toward spawning more enemies (higher chance of add_enemy)
+    const types = ['add_enemy', 'add_enemy', 'add_enemy', 'buff_hp', 'buff_speed', 'buff_damage'];
     const options = [];
 
     // Ensure we have at least 3 distinct options
     let attempts = 0;
-    while (options.length < CONFIG.ENEMY_UPGRADE_CHOICES && attempts < 40) {
+    while (options.length < CONFIG.ENEMY_UPGRADE_CHOICES && attempts < 80) {
       attempts++;
       const difficulty = Utils.randInt(1, 3);
       const upgradeType = Utils.randFrom(types);
-      const def = Utils.randFrom(defs);
+
+      // For buffs, only allow enemies that are currently part of the wave composition
+      const eligible = upgradeType === 'add_enemy'
+        ? defs
+        : defs.filter(d => spawnedIds.has(d.id));
+      if (eligible.length === 0) continue;
+
+      const def = Utils.randFrom(eligible);
 
       const key = `${upgradeType}_${def.id}_${difficulty}`;
       if (options.some(o => o.key === key)) continue;
